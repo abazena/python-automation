@@ -11,11 +11,12 @@ class Handler(FileSystemEventHandler):
     def on_modified(self, event):
         for file_name in os.listdir(tracked_dir):
             file_src = tracked_dir + "/" + file_name
-            extension = os.path.splitext(file_src)[1]
-            dest_dir = get_dst_by_ext(extension)
-            if not os.path.exists(root_dest_dir +"/" + dest_dir):
-                os.makedirs(root_dest_dir +"/" + dest_dir)
-            file_dst = root_dest_dir +"/" + dest_dir + "/"+ str(time.time()) + "_" + file_name
+            fname = os.path.splitext(file_name)
+            dest_dir = root_dest_dir +"/" + get_dst_by_ext(fname[1])
+            if not os.path.exists(dest_dir):
+                os.makedirs(dest_dir)
+            new_file_name = fname[0] + "_" + str(time.time()).replace(".", "") + fname[1]
+            file_dst = dest_dir + "/"+ new_file_name
             os.rename(file_src, file_dst)
 
 def get_dst_by_ext(extension):
