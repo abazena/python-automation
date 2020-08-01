@@ -13,13 +13,14 @@ class Handler(FileSystemEventHandler):
             file_src = tracked_dir + "/" + file_name
             extension = os.path.splitext(file_src)[1]
             dest_dir = get_dst_by_ext(extension)
+            if not os.path.exists(root_dest_dir +"/" + dest_dir):
+                os.makedirs(root_dest_dir +"/" + dest_dir)
             file_dst = root_dest_dir +"/" + dest_dir + "/"+ str(time.time()) + "_" + file_name
             os.rename(file_src, file_dst)
 
 def get_dst_by_ext(extension):
     if extension == "":
         return "folders"
-    
     for key in extensions:
         for ext in extensions[key]:
             if ext == extension:
