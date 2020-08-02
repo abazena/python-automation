@@ -28,8 +28,9 @@ def create_origin_repo(name):
         repo = u.create_repo(name)
         os.system('git remote add origin ' + repo.clone_url)
         os.system('git push -u origin master')
+        os.system('code .')
     except Exception:
-        print("Repo with this name exists! Choose another name")
+        print("Error while connection to GitHub! Check Repo Name or Credentials")
         os.chdir(projects_dir)
         os.system('rmdir /Q /S "./'+name+'"')  # change to linux command
         print("Local repo deleted")
@@ -42,6 +43,7 @@ def create(project_name):
         os.chdir('./'+project_name)
         create_local_repo(project_name)
         create_origin_repo(project_name)
+        
     else:
         print('Project with the name', project_name,
               'exists! Choose another name')
